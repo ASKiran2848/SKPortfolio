@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Website development, WordPress and Elementor, responsive websites and frontend fixes by Appari Sai Kiran.">
+<title>Appari Sai Kiran — Website Developer</title>
+<style>
+:root {
+  --site-primary: #173f35;
+  --site-on-primary: #ffffff;
+  --site-secondary: #e8b96a;
+  --site-on-secondary: #1e241f;
+  --site-background: #f7f6f1;
+  --site-on-background: #17231e;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --surface: light-dark(#ffffff, #1d2421);
+  --surface-soft: light-dark(#eeeee7, #252e29);
+  --muted: light-dark(#5e6c64, #bac6be);
+  --line: light-dark(#dce1d8, #3b4941);
+  --shadow: 0 16px 44px rgba(25, 48, 37, .08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; color-scheme: light dark; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); line-height: 1.6; }
+button, a { font: inherit; }
+a { color: inherit; }
+#app { min-height: 100vh; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; overflow: hidden; }
+.container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+header { position: sticky; top: 0; z-index: 10; background: light-dark(rgba(247,246,241,.92), rgba(23,31,27,.94)); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.nav { min-height: 76px; display:flex; align-items:center; justify-content:space-between; gap: 20px; }
+.brand { display:flex; align-items:center; gap: 12px; text-decoration:none; font-weight: 800; letter-spacing:-.03em; }
+.brand-mark { display:grid; place-items:center; width:42px; height:42px; background:var(--site-primary); color:var(--site-on-primary); border-radius: calc(13px * var(--site-radius-scale)); font-weight:900; }
+.nav-links { display:flex; gap:24px; align-items:center; }
+.nav-links a { text-decoration:none; color:var(--muted); font-size:.94rem; }
+.nav-links a:hover { color:var(--site-on-background); }
+.menu-toggle { display:none; border:1px solid var(--line); background:var(--surface); color:var(--site-on-background); padding:8px 12px; border-radius:10px; }
+.btn { display:inline-flex; justify-content:center; align-items:center; gap:8px; border:1px solid transparent; border-radius: calc(999px * var(--site-radius-scale)); padding:12px 19px; font-weight:750; text-decoration:none; transition:transform .18s ease, background .18s ease; cursor:pointer; }
+.btn:hover { transform:translateY(-2px); }
+.btn-primary { background:var(--site-primary); color:var(--site-on-primary); }
+.btn-secondary { background:var(--site-secondary); color:var(--site-on-secondary); }
+.btn-outline { border-color:var(--line); background:var(--surface); color:var(--site-on-background); }
+.hero { position:relative; padding: calc(92px * var(--site-spacing-scale)) 0 calc(86px * var(--site-spacing-scale)); }
+.hero::before { content:""; position:absolute; width:380px; height:380px; right:-130px; top:10px; border-radius:50%; background:radial-gradient(circle, color-mix(in srgb, var(--site-secondary) 25%, transparent), transparent 68%); opacity:var(--site-decoration-opacity); pointer-events:none; }
+.hero-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:64px; align-items:center; position:relative; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; color:var(--site-primary); background:light-dark(#e5eee7,#293d33); border-radius:999px; padding:7px 12px; font-size:.82rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+.eyebrow::before { content:""; width:7px; height:7px; border-radius:50%; background:#d09b45; }
+h1,h2,h3 { font-family:var(--site-font-heading); line-height:1.12; letter-spacing:-.045em; }
+h1 { font-size:calc(clamp(2.8rem, 6vw, 5.2rem) * var(--site-heading-scale)); margin:22px 0; }
+h1 span { color:var(--site-primary); }
+.lead { color:var(--muted); font-size:1.12rem; max-width:620px; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+.trust-row { display:flex; flex-wrap:wrap; gap:18px; margin-top:28px; color:var(--muted); font-size:.9rem; }
+.trust-row span::before { content:"✓"; color:var(--site-primary); font-weight:900; margin-right:7px; }
+.profile-card { background:var(--surface); border:1px solid var(--line); border-radius:calc(28px * var(--site-radius-scale)); padding:28px; box-shadow:var(--shadow); transform:rotate(1deg); }
+.profile-art { min-height:260px; border-radius:calc(20px * var(--site-radius-scale)); background:var(--site-primary); color:var(--site-on-primary); display:flex; flex-direction:column; justify-content:space-between; padding:24px; overflow:hidden; position:relative; }
+.profile-art::after { content:"SK"; position:absolute; right:-8px; bottom:-68px; font-size:12rem; font-weight:900; letter-spacing:-.12em; color:rgba(255,255,255,.08); }
+.art-top { display:flex; justify-content:space-between; align-items:center; font-size:.83rem; color:#d8e5dc; }
+.art-symbol { font-size:3.8rem; line-height:1; font-weight:900; letter-spacing:-.1em; }
+.art-bottom { position:relative; z-index:1; }
+.art-bottom strong { display:block; font-size:1.35rem; }
+.art-bottom span { color:#d8e5dc; font-size:.9rem; }
+.mini-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+.mini-stat { background:var(--surface-soft); border-radius:14px; padding:15px; }
+.mini-stat strong { display:block; font-size:1.15rem; }
+.mini-stat span { font-size:.82rem; color:var(--muted); }
+section { padding: calc(76px * var(--site-spacing-scale)) 0; }
+.section-soft { background:var(--surface-soft); }
+.section-head { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:32px; }
+.kicker { text-transform:uppercase; letter-spacing:.12em; font-size:.78rem; font-weight:850; color:var(--site-primary); }
+h2 { font-size:calc(clamp(2rem, 4vw, 3.2rem) * var(--site-heading-scale)); margin:10px 0 0; }
+.section-intro { max-width:440px; color:var(--muted); margin:0; }
+.service-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:calc(20px * var(--site-radius-scale)); padding:25px; }
+.service-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:15px; background:var(--surface-soft); color:var(--site-primary); font-size:1.4rem; margin-bottom:22px; }
+.card h3 { font-size:1.3rem; margin:0 0 10px; letter-spacing:-.025em; }
+.card p { color:var(--muted); margin:0 0 16px; }
+.card ul { padding-left:18px; margin:0; color:var(--muted); font-size:.93rem; }
+.card li { margin:6px 0; }
+.project-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.project-image-real { display:block; width:100%; height:190px; object-fit:cover; border-radius:15px; border:1px solid var(--line); margin-bottom:18px; background:var(--surface-soft); }
+.project-actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+.project-actions .btn { padding:9px 13px; font-size:.86rem; }
+.project-visual { min-height:190px; border-radius:15px; padding:18px; margin-bottom:20px; overflow:hidden; position:relative; background:var(--surface-soft); border:1px solid var(--line); }
+.browser-bar { display:flex; gap:5px; margin-bottom:14px; }
+.browser-bar i { display:block; width:7px; height:7px; border-radius:50%; background:#9eaaa1; }
+.mock-title { width:75%; height:13px; border-radius:5px; background:var(--site-primary); margin:13px 0 9px; }
+.mock-line { width:90%; height:6px; border-radius:4px; background:var(--line); margin:7px 0; }
+.mock-line.short { width:57%; }
+.mock-button { display:inline-block; width:76px; height:20px; border-radius:99px; background:var(--site-secondary); margin-top:9px; }
+.mock-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:15px; }
+.mock-grid span { display:block; height:55px; background:light-dark(#dce8dd,#35483b); border-radius:7px; }
+.project-visual.dashboard { background:var(--site-primary); }
+.dashboard .mock-title { background:#f1d59f; }
+.dashboard .mock-grid { grid-template-columns:repeat(2,1fr); }
+.dashboard .mock-grid span { background:rgba(255,255,255,.17); height:45px; }
+.tag-row { display:flex; flex-wrap:wrap; gap:7px; margin:14px 0; }
+.tag { font-size:.76rem; border:1px solid var(--line); border-radius:999px; padding:4px 9px; color:var(--muted); }
+.demo-note { color:var(--muted); font-size:.84rem; margin-top:12px; }
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+.price-card { display:flex; flex-direction:column; }
+.price { font-size:2rem; letter-spacing:-.05em; font-weight:850; margin:12px 0 4px; }
+.price small { font-size:.86rem; font-weight:500; color:var(--muted); letter-spacing:0; }
+.price-card .btn { margin-top:auto; }
+.featured { border:2px solid var(--site-primary); position:relative; }
+.featured-label { display:inline-block; width:max-content; font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; font-weight:850; color:var(--site-primary); background:light-dark(#e5eee7,#293d33); border-radius:999px; padding:5px 9px; }
+.pricing-footnote { margin-top:18px; color:var(--muted); font-size:.9rem; }
+.process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; counter-reset:steps; }
+.process-step { border-top:2px solid var(--line); padding-top:18px; counter-increment:steps; }
+.process-step::before { content:"0" counter(steps); color:var(--site-primary); font-size:.82rem; font-weight:900; }
+.process-step h3 { font-size:1.1rem; margin:13px 0 8px; }
+.process-step p { color:var(--muted); font-size:.94rem; margin:0; }
+.certificate-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.certificate-card { display:flex; flex-direction:column; gap:12px; }
+.certificate-icon { display:grid; place-items:center; width:54px; height:54px; border-radius:16px; background:var(--surface-soft); color:var(--site-primary); font-size:1.55rem; }
+.certificate-card p { color:var(--muted); margin:0; }
+.certificate-meta { color:var(--muted); font-size:.85rem; margin-top:auto; }
+.certificate-note { color:var(--muted); font-size:.9rem; margin-top:20px; }
+.contact-wrap { display:grid; grid-template-columns:.9fr 1.1fr; gap:38px; align-items:start; }
+.contact-panel { background:var(--site-primary); color:var(--site-on-primary); border-radius:calc(24px * var(--site-radius-scale)); padding:30px; }
+.contact-panel h2 { font-size:2.3rem; }
+.contact-panel p { color:#d8e5dc; }
+.contact-link { display:block; padding:13px 0; border-bottom:1px solid rgba(255,255,255,.2); text-decoration:none; overflow-wrap:anywhere; }
+.contact-link:last-child { border-bottom:0; }
+.contact-form { background:var(--surface); border:1px solid var(--line); border-radius:calc(24px * var(--site-radius-scale)); padding:28px; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+.field { display:flex; flex-direction:column; gap:7px; }
+.field.full { grid-column:1/-1; }
+label { font-size:.9rem; font-weight:750; }
+input,select,textarea { width:100%; border:1px solid var(--line); background:var(--site-background); color:var(--site-on-background); border-radius:11px; padding:12px 13px; font:inherit; }
+textarea { min-height:125px; resize:vertical; }
+.form-hint { color:var(--muted); font-size:.83rem; margin:12px 0 18px; }
+footer { border-top:1px solid var(--line); padding:25px 0; color:var(--muted); font-size:.9rem; }
+.footer-row { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+:focus-visible { outline:3px solid var(--site-secondary); outline-offset:3px; }
+@media (max-width:850px) {
+  .hero-grid,.contact-wrap { grid-template-columns:1fr; gap:35px; }
+  .profile-card { max-width:520px; transform:none; }
+  .service-grid,.project-grid,.pricing-grid { grid-template-columns:repeat(2,1fr); }
+  .certificate-grid { grid-template-columns:repeat(2,1fr); }
+  .process-grid { grid-template-columns:repeat(2,1fr); }
+  .section-head { align-items:start; flex-direction:column; }
+}
+@media (max-width:620px) {
+  .container { width:min(100% - 28px,1120px); }
+  .nav { min-height:66px; }
+  .menu-toggle { display:inline-flex; }
+  .nav-links { display:none; position:absolute; top:66px; left:0; right:0; padding:18px 22px 22px; background:var(--site-background); border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; gap:16px; }
+  .nav-links.open { display:flex; }
+  .nav-links .btn { text-align:center; }
+  .hero { padding:58px 0; }
+  .service-grid,.project-grid,.pricing-grid,.process-grid,.certificate-grid { grid-template-columns:1fr; }
+  section { padding:55px 0; }
+  .form-grid { grid-template-columns:1fr; }
+  .field.full { grid-column:auto; }
+  .profile-art { min-height:220px; }
+  .trust-row { gap:10px 15px; }
+  h1 { font-size:calc(clamp(2.6rem, 13vw, 4rem) * var(--site-heading-scale)); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none !important; animation:none !important; } }
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home" aria-label="Appari Sai Kiran home"><span class="brand-mark">SK</span><span>APPARI SAI KIRAN</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu ☰</button>
+    <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a href="#services">Services</a><a href="#skills">Skills</a><a href="#work">Demo work</a><a href="#pricing">Pricing</a><a href="#process">Process</a><a href="#certificates">Certificates</a><a class="btn btn-primary" href="#contact">Let's talk ↗</a>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Available for small freelance projects</span>
+      <h1>Websites that work <span>beautifully.</span></h1>
+      <p class="lead">I'm Appari Sai Kiran. I build clean, responsive websites and help small businesses improve the experience their customers get online.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#contact">Discuss your project ↗</a><a class="btn btn-outline" href="#work">Explore demo work ↓</a></div>
+      <div class="trust-row"><span>Mobile-friendly builds</span><span>Clear scope & pricing</span><span>Friendly communication</span></div>
+    </div>
+    <div class="profile-card" aria-label="Developer introduction card">
+      <div class="profile-art"><div class="art-top"><span>INDEPENDENT WEB DEVELOPER</span><span>✳</span></div><div class="art-symbol">SK<span style="color:#e8b96a">.</span></div><div class="art-bottom"><strong>Thoughtful websites.<br>Practical solutions.</strong><span>WordPress · Frontend · Responsive design</span></div></div>
+      <div class="mini-stats"><div class="mini-stat"><strong>Mobile first</strong><span>Every screen matters</span></div><div class="mini-stat"><strong>Small business</strong><span>Simple, useful websites</span></div></div>
+    </div>
+  </div>
+</section>
+<section id="services" class="section-soft">
+  <div class="container"><div class="section-head"><div><div class="kicker">What I can help with</div><h2>Useful websites, minus the fuss.</h2></div><p class="section-intro">From a first landing page to improving an existing site, I focus on clear layouts, responsive behaviour and easy-to-use experiences.</p></div>
+    <div class="service-grid">
+      <article class="card"><div class="service-icon">▧</div><h3>WordPress & Elementor</h3><p>Business websites you can update without needing to code every change.</p><ul><li>Page setup and styling</li><li>Content and layout updates</li><li>Basic contact sections</li></ul></article>
+      <article class="card"><div class="service-icon">◫</div><h3>Responsive websites</h3><p>Layouts designed to feel clear and usable on mobile, tablet and desktop.</p><ul><li>Landing pages</li><li>Small business websites</li><li>Mobile layout improvements</li></ul></article>
+      <article class="card"><div class="service-icon">⌘</div><h3>Frontend & website fixes</h3><p>Practical improvements to existing pages and frontend interfaces.</p><ul><li>HTML, CSS and JavaScript</li><li>React frontend components</li><li>Spacing, links and UI fixes</li></ul></article>
+    </div>
+  </div>
+</section>
+<section id="skills" aria-labelledby="skills-title">
+  <div class="container"><div class="section-head"><div><div class="kicker">Skills & tools</div><h2 id="skills-title">The tools behind the work.</h2></div><p class="section-intro">A practical mix of frontend development, website platforms and UI/UX design tools used to create clear digital experiences.</p></div>
+    <div class="service-grid">
+      <article class="card"><div class="service-icon" aria-hidden="true">⌘</div><h3>Web Development</h3><p>Building responsive pages and interactive frontend experiences.</p><div class="tag-row"><span class="tag">HTML · Expert</span><span class="tag">CSS · Advanced</span><span class="tag">JavaScript · Intermediate</span><span class="tag">React · Intermediate</span><span class="tag">Bootstrap · Expert</span></div></article>
+      <article class="card"><div class="service-icon" aria-hidden="true">☁</div><h3>Cloud & Productivity</h3><p>Working with cloud services and everyday productivity tools.</p><div class="tag-row"><span class="tag">AWS · Intermediate</span><span class="tag">MS Office · Advanced</span></div></article>
+      <article class="card"><div class="service-icon" aria-hidden="true">◫</div><h3>UI/UX & Design</h3><p>Planning layouts and visual content with attention to usability and clarity.</p><div class="tag-row"><span class="tag">Figma · Intermediate</span><span class="tag">Canva · Advanced</span><span class="tag">Wireframing</span><span class="tag">Prototyping</span></div></article>
+    </div>
+  </div>
+</section>
+<section id="work">
+  <div class="container"><div class="section-head"><div><div class="kicker">Selected concepts</div><h2>Demo projects, made to show the approach.</h2></div><p class="section-intro">These are self-initiated concept designs, not client commissions. They show the kind of work I can build for your business.</p></div>
+    <div class="project-grid">
+      <article class="card"><img class="project-image-real" src="images/Website.png" alt="Website project preview"><span class="featured-label">Web development</span><h3 style="margin-top:14px">Website</h3><p>A website project demonstrating page layout, styling and responsive design.</p><div class="tag-row"><span class="tag">HTML / CSS</span><span class="tag">Web design</span></div><div class="project-actions"><a class="btn btn-primary" href="https://askiran2848.github.io/WEBSITE/" target="_blank" rel="noopener noreferrer">Live preview ↗</a><a class="btn btn-outline" href="https://github.com/ASKiran2848/WEBSITE" target="_blank" rel="noopener noreferrer">Source code</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Javascript.png" alt="JavaScript project preview"><span class="featured-label">JavaScript</span><h3 style="margin-top:14px">JavaScript Projects</h3><p>Frontend practice and interactive web features built with JavaScript.</p><div class="tag-row"><span class="tag">JavaScript</span><span class="tag">Interaction</span></div><div class="project-actions"><a class="btn btn-primary" href="https://askiran2848.github.io/JAVASCRIPT/" target="_blank" rel="noopener noreferrer">Live preview ↗</a><a class="btn btn-outline" href="https://github.com/ASKiran2848/JAVASCRIPT" target="_blank" rel="noopener noreferrer">Source code</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/React1.png" alt="React project preview"><span class="featured-label">Frontend development</span><h3 style="margin-top:14px">React Project</h3><p>A React-based frontend project showcasing reusable UI and component structure.</p><div class="tag-row"><span class="tag">React</span><span class="tag">Components</span></div><div class="project-actions"><a class="btn btn-primary" href="https://askiran2848.github.io/React/" target="_blank" rel="noopener noreferrer">Live preview ↗</a><a class="btn btn-outline" href="https://github.com/ASKiran2848/React" target="_blank" rel="noopener noreferrer">Source code</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Wordpress static.png" alt="Static WordPress website preview"><span class="featured-label">WordPress</span><h3 style="margin-top:14px">Static WordPress Site</h3><p>A WordPress site concept focused on structured pages and presentation.</p><div class="tag-row"><span class="tag">WordPress</span><span class="tag">Website design</span></div><div class="project-actions"><a class="btn btn-primary" href="https://dev-ecomd.pantheonsite.io/" target="_blank" rel="noopener noreferrer">Live preview ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Wordpress dynamic.png" alt="Dynamic WordPress website preview"><span class="featured-label">WordPress</span><h3 style="margin-top:14px">Dynamic WordPress Site</h3><p>A dynamic WordPress site demonstrating content management and page layouts.</p><div class="tag-row"><span class="tag">WordPress</span><span class="tag">Dynamic content</span></div><div class="project-actions"><a class="btn btn-primary" href="https://dev-wopress.pantheonsite.io/" target="_blank" rel="noopener noreferrer">Live preview ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Figma mobile app.png" alt="Figma mobile application design"><span class="featured-label">UI/UX design</span><h3 style="margin-top:14px">Figma Mobile Application</h3><p>A mobile application design prototype created in Figma.</p><div class="tag-row"><span class="tag">Figma</span><span class="tag">Mobile UI</span><span class="tag">Prototype</span></div><div class="project-actions"><a class="btn btn-primary" href="https://www.figma.com/proto/iHzmPOTyYpDIidoDCaMrKE/Coffee?node-id=0-1&t=4CrzLyNBKfJcqhHI-1" target="_blank" rel="noopener noreferrer">View prototype ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Figma web app.png" alt="Figma web application design"><span class="featured-label">UI/UX design</span><h3 style="margin-top:14px">Figma Web Application</h3><p>A web interface prototype focused on layout, visual hierarchy and user flow.</p><div class="tag-row"><span class="tag">Figma</span><span class="tag">Web UI</span><span class="tag">Prototype</span></div><div class="project-actions"><a class="btn btn-primary" href="https://www.figma.com/proto/qzrvplf38gcKmvZx0OEt1T/cafe-website-(coffee)-(Community)?node-id=2-2&t=aH2WRpZ3ihe3lOxd-1" target="_blank" rel="noopener noreferrer">View prototype ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Happy Diwali.png" alt="Diwali promotional flyer"><span class="featured-label">Graphic design</span><h3 style="margin-top:14px">Flyer 1</h3><p>A festive promotional design created for a visual communication exercise.</p><div class="tag-row"><span class="tag">Canva / Design</span><span class="tag">Flyer</span></div><div class="project-actions"><a class="btn btn-primary" href="images/Happy Diwali.png" target="_blank" rel="noopener noreferrer">View design ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/We Are Hiring flyer.png" alt="We are hiring promotional flyer"><span class="featured-label">Graphic design</span><h3 style="margin-top:14px">Flyer 2</h3><p>A recruitment-themed flyer layout designed to communicate a message clearly.</p><div class="tag-row"><span class="tag">Visual design</span><span class="tag">Flyer</span></div><div class="project-actions"><a class="btn btn-primary" href="images/We Are Hiring flyer.png" target="_blank" rel="noopener noreferrer">View design ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Voyage to victory.png" alt="Voyage to Victory flyer design"><span class="featured-label">Graphic design</span><h3 style="margin-top:14px">Flyer 3</h3><p>A themed visual design showcasing typography and promotional composition.</p><div class="tag-row"><span class="tag">Visual design</span><span class="tag">Poster</span></div><div class="project-actions"><a class="btn btn-primary" href="images/Voyage to victory.png" target="_blank" rel="noopener noreferrer">View design ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Mockup1.png" alt="Design mockup one"><span class="featured-label">Design mockup</span><h3 style="margin-top:14px">Mockup 1</h3><p>A design presentation mockup showing a visual concept in context.</p><div class="tag-row"><span class="tag">Mockup</span><span class="tag">Presentation</span></div><div class="project-actions"><a class="btn btn-primary" href="images/Mockup1.png" target="_blank" rel="noopener noreferrer">View design ↗</a></div></article>
+      <article class="card"><img class="project-image-real" src="images/Mockup2.png" alt="Design mockup two"><span class="featured-label">Design mockup</span><h3 style="margin-top:14px">Mockup 2</h3><p>A second design mockup to present visual work in a polished format.</p><div class="tag-row"><span class="tag">Mockup</span><span class="tag">Presentation</span></div><div class="project-actions"><a class="btn btn-primary" href="images/Mockup2.png" target="_blank" rel="noopener noreferrer">View design ↗</a></div></article>
+    </div>
+  </div>
+</section>
+<section id="pricing" class="section-soft">
+  <div class="container"><div class="section-head"><div><div class="kicker">Simple starting prices</div><h2>Know the range before we start.</h2></div><p class="section-intro">Introductory estimates for small, well-defined projects. Final pricing depends on requirements, content and functionality.</p></div>
+    <div class="pricing-grid">
+      <article class="card price-card"><h3>Quick Fix</h3><p>For an existing site that needs a small improvement.</p><div class="price">₹500–₹1,500</div><p>Per small task</p><ul><li>One agreed layout or styling fix</li><li>Small content or link update</li><li>Basic responsive check</li></ul><a class="btn btn-outline" style="margin-top:24px" href="#contact" data-service="Quick Fix">Request a fix</a></article>
+      <article class="card price-card featured"><span class="featured-label">Popular starter</span><h3 style="margin-top:14px">Landing Page</h3><p>For a business that needs a clear online introduction.</p><div class="price">₹2,500–₹4,000</div><p>Per single-page project</p><ul><li>Responsive single-page layout</li><li>Services and contact section</li><li>One revision round</li><li>Basic page title and description</li></ul><a class="btn btn-primary" style="margin-top:24px" href="#contact" data-service="Landing Page">Discuss a landing page</a></article>
+      <article class="card price-card"><h3>Small Business Site</h3><p>For a business that needs a few core pages.</p><div class="price">₹5,000–₹10,000</div><p>For up to 4–5 pages</p><ul><li>Home, About, Services and Contact</li><li>WordPress/Elementor or agreed stack</li><li>Mobile responsive styling</li><li>Basic contact section</li></ul><a class="btn btn-outline" style="margin-top:24px" href="#contact" data-service="Small Business Website">Plan my website</a></article>
+    </div><p class="pricing-footnote">Domain, hosting, premium themes/plugins, paid integrations, advanced forms and ongoing maintenance are excluded unless agreed. A small advance and written scope are recommended for direct clients.</p>
+  </div>
+</section>
+<section id="process">
+  <div class="container"><div class="section-head"><div><div class="kicker">How we'll work</div><h2>A straightforward process.</h2></div><p class="section-intro">You know what is included, what it costs and what happens next.</p></div>
+    <div class="process-grid"><article class="process-step"><h3>Tell me the goal</h3><p>Share your business, audience, examples you like and must-have features.</p></article><article class="process-step"><h3>Confirm scope</h3><p>Agree on pages, deliverables, timeline, price and revision limits in writing.</p></article><article class="process-step"><h3>Build & review</h3><p>I create the agreed work and share a preview for feedback.</p></article><article class="process-step"><h3>Handover</h3><p>After approval and payment, receive the agreed files or site handover.</p></article></div>
+  </div>
+</section>
+<section id="certificates" class="section-soft">
+  <div class="container"><div class="section-head"><div><div class="kicker">Learning & credentials</div><h2>Certificates and professional learning.</h2></div><p class="section-intro">A place to showcase completed courses and certificates relevant to design, web development and technology.</p></div>
+    <div class="certificate-grid">
+      <article class="card certificate-card"><div class="certificate-icon" aria-hidden="true">✦</div><span class="featured-label">Training</span><h3>UI/UX Designer</h3><p>UI/UX Design training at Tech Mahindra Smart Academy, Visakhapatnam.</p><div class="certificate-meta">Tech Mahindra Smart Academy · Visakhapatnam</div></article>
+      <article class="card certificate-card"><div class="certificate-icon" aria-hidden="true">◇</div><span class="featured-label">Add your credential</span><h3>Technical Certificate</h3><p>Replace this card with a certificate you have completed, including its exact title and issuing organization.</p><div class="certificate-meta">Add certificate image or verification link when available</div></article>
+      <article class="card certificate-card"><div class="certificate-icon" aria-hidden="true">⌘</div><span class="featured-label">Add your credential</span><h3>Cloud / Development</h3><p>Use this card for an earned AWS, Microsoft, networking or development certificate. Do not list an exam as certified unless you passed it.</p><div class="certificate-meta">Add certificate image or verification link when available</div></article>
+    </div>
+    <p class="certificate-note">To finish this section, replace the two “Add your credential” cards with your real certificate details and links. Only include credentials you have actually earned.</p>
+  </div>
+</section>
+<section id="contact" class="section-soft">
+  <div class="container contact-wrap">
+    <div class="contact-panel"><div class="kicker" style="color:#e8b96a">Have a project in mind?</div><h2>Let's make your website work harder.</h2><p>Tell me what you're building or what isn't working on your current site. I'll reply with a few questions and a clear next step.</p>
+      <a class="contact-link" id="emailLink" href="mailto:skiranappari@gmail.com">✉ skiranappari@gmail.com</a>
+      <a class="contact-link" id="whatsappLink" href="https://wa.me/919063856357?text=Hi%20Sai%20Kiran">◉ WhatsApp: +91 90638 56357</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/askiran99" target="_blank" rel="noopener noreferrer">↗ LinkedIn profile</a>
+      <a class="contact-link" href="https://github.com/ASKiran2848" target="_blank" rel="noopener noreferrer">↗ GitHub profile</a>
+      <p style="font-size:.83rem;margin-bottom:0">For a faster reply, include the service you need and your target deadline.</p>
+    </div>
+    <form class="contact-form" id="contactForm">
+      <h3 style="font-size:1.5rem;margin:0 0 7px">Project enquiry</h3><p style="color:var(--muted);margin:0 0 22px">Fill this in to prepare an enquiry message. It will open your email app; this demo does not store submissions.</p>
+      <div class="form-grid">
+        <div class="field"><label for="name">Your name</label><input id="name" name="name" required placeholder="Name"></div>
+        <div class="field"><label for="email">Your email</label><input id="email" name="email" type="email" required placeholder="you@example.com"></div>
+        <div class="field full"><label for="service">What do you need?</label><select id="service" name="service"><option>Landing Page</option><option>Small Business Website</option><option>WordPress / Elementor</option><option>React Frontend</option><option>Website Fix</option><option>Other</option></select></div>
+        <div class="field full"><label for="details">A little about the project</label><textarea id="details" name="details" required placeholder="What should the website do? Do you have an existing site or deadline?"></textarea></div>
+      </div>
+      <p class="form-hint">The form uses your email application and does not send data to a server.</p>
+      <button class="btn btn-primary" type="submit">Prepare enquiry email ↗</button>
+      <p id="formStatus" class="form-hint" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+</main>
+<footer><div class="container footer-row"><span>© <span id="year"></span> Appari Sai Kiran · Website Developer</span><span>Built with HTML, CSS & JavaScript</span><a href="#home">Back to top ↑</a></div></footer>
+</div>
+<script>
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.textContent = open ? 'Close ×' : 'Menu ☰';
+});
+navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.textContent = 'Menu ☰';
+}));
+document.querySelectorAll('[data-service]').forEach(link => link.addEventListener('click', () => {
+  document.getElementById('service').value = link.dataset.service;
+}));
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('contactForm').addEventListener('submit', event => {
+  event.preventDefault();
+  const form = new FormData(event.currentTarget);
+  const recipient = 'skiranappari@gmail.com';
+  const subject = encodeURIComponent('Freelance website enquiry — ' + form.get('service'));
+  const body = encodeURIComponent('Name: ' + form.get('name') + '\nReply email: ' + form.get('email') + '\nService: ' + form.get('service') + '\n\nProject details:\n' + form.get('details'));
+  window.location.href = 'mailto:' + recipient + '?subject=' + subject + '&body=' + body;
+  document.getElementById('formStatus').textContent = 'Your email app should open with the enquiry drafted.';
+});
+</script>
+</body>
+</html>
